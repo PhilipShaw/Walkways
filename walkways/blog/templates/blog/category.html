@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block title %} {{ category.title }} | {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+      <div class="section">
+        <div class="columns">
+          <div class="column has-text-centered">
+            <h1 class="title" style="color: ghostwhite;">Bulma Card Layout Template</h1><br>
+          </div>
+        </div>
+        <div id="app" class="row columns is-multiline">
+            {% for post in posts %}
+                <div v-for="card in cardData" key="card.id" class="column is-4">
+                <a href ="{% url 'post_detail' post.category.slug post.slug %}">
+                  <div class="card large">
+                    <div class="card-image">
+                      <figure class="image is-16by9">
+                        <img :src="card.image" alt="Image">
+                      </figure>
+                    </div>
+                    <div class="card-content">
+                      <div class="media">
+                        <div class="media-left">
+                          <figure class="image is-48x48">
+                            <img :src="card.avatar" alt="Image">
+                          </figure>
+                        </div>
+                        <div class="media-content">
+                          <p class="title is-4 no-padding">{{ post.title }}</p>
+                          <p>
+                            <span class="title is-6">
+                              <a :href=`http://twitter.com/${card.user.handle}`> {{card.user.handle}} </a> </span> </p>
+                          <p class="subtitle is-6">{{card.user.title}}</p>
+                        </div>
+                      </div>
+                      <div class="content">
+                        {{ post.intro }}
+                        <div class="background-icon"><span class="icon-twitter"></span></div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                </div> <!-- End of card object -->
+            {% empty %}
+                <div class="content">
+                  <p>There are no posts in this category.</p>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>    <!-- End of container class -->
+
+{% endblock %}
